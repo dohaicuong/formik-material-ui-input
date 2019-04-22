@@ -7,13 +7,13 @@ import Icon from '@material-ui/core/Icon'
 
 export default props => {
   return (
-    <Field component={MuiPhoneInput}
+    <Field component={MuiPostcodeInput}
       {...props}
     />
   )
 }
 
-export const MuiPhoneInput = ({
+export const MuiPostcodeInput = ({
   field, form,
   leadIcon, trailIcon,
   leadDom, trailDom,
@@ -36,7 +36,7 @@ export const MuiPhoneInput = ({
 
       // Formatted input handling
       InputProps={{
-        inputComponent: PhoneFormatInput,
+        inputComponent: PostcodeFormatInput,
         startAdornment:
           leadIcon ? <InputAdornment position='start'><Icon>{leadIcon}</Icon></InputAdornment> :
           leadDom ? <InputAdornment position='start'>leadDom</InputAdornment> :
@@ -50,7 +50,7 @@ export const MuiPhoneInput = ({
   )
 }
 
-export const PhoneFormatInput = ({ inputRef, onChange, ...props }) => (
+export const PostcodeFormatInput = ({ inputRef, onChange, ...props }) => (
   <NumberFormat {...props}
     getInputRef={inputRef}
     onValueChange={values => {
@@ -59,6 +59,6 @@ export const PhoneFormatInput = ({ inputRef, onChange, ...props }) => (
 
     allowNegative={false}
     decimalScale={0}
-    format='##########'
+    format='####'
   />  
 )

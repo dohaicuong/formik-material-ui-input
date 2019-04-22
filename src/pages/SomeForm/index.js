@@ -7,6 +7,7 @@ import DateTimeInput from 'components/Formik/DateTimeInput'
 
 import PhoneInput from 'components/Formik/PhoneInput'
 import MoneyInput from 'components/Formik/MoneyInput'
+import PostcodeInput from 'components/Formik/PostcodeInput'
 
 import Button from '@material-ui/core/Button'
 
@@ -23,6 +24,7 @@ class SomeForm extends Component {
 
         <PhoneInput label='Phone' name='phone' leadIcon='phone' required />
         <MoneyInput label='Money' name='money' required />
+        <PostcodeInput label='Postcode' name='postcode' leadIcon='location_on' required />
 
         <br /><br />
         <Button variant='contained' color='primary' size='large' type='submit'>Go</Button>
@@ -34,22 +36,10 @@ class SomeForm extends Component {
 export default withFormik({
   mapPropsToValues: () => ({
     date: undefined, time: undefined, datetime: undefined,
-    phone: '', money: ''
+    phone: '', money: '', postcode: ''
   }),
   validate: (values, props) => {
     const errors = {}
-
-//     if (!values.date) {
-//       errors.date = 'Required'
-//     }
-// 
-//     if (!values.time) {
-//       errors.time = 'Required'
-//     }
-// 
-//     if (!values.datetime) {
-//       errors.datetime = 'Required'
-//     }
 
       if(!values.phone) errors.phone = 'Required'
       if(values.phone.length !== 10) errors.phone = 'Phone need to have 10 numbers'
