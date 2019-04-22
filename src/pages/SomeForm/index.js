@@ -9,11 +9,14 @@ import PhoneInput from 'components/Formik/PhoneInput'
 import MoneyInput from 'components/Formik/MoneyInput'
 import PostcodeInput from 'components/Formik/PostcodeInput'
 
+import EditorInput from 'components/Formik/EditorInput'
+import { EditorState } from 'draft-js'
+
 import Button from '@material-ui/core/Button'
 
 class SomeForm extends Component {
   render() {
-    // const { handleSubmit, values } = this.props
+    const { handleBlur, setFieldValue, values } = this.props
     //<InlineDatePicker label="Basic example" value={this.state.selectedDate} onChange={this.handleDateChange} />
     return (
       <Form>
@@ -25,8 +28,11 @@ class SomeForm extends Component {
         <PhoneInput label='Phone' name='phone' leadIcon='phone' required />
         <MoneyInput label='Money' name='money' required />
         <PostcodeInput label='Postcode' name='postcode' leadIcon='location_on' required />
-
         <br /><br />
+
+        <EditorInput name='editor' />
+        <br /><br />
+
         <Button variant='contained' color='primary' size='large' type='submit'>Go</Button>
       </Form>
     )
@@ -36,7 +42,8 @@ class SomeForm extends Component {
 export default withFormik({
   mapPropsToValues: () => ({
     date: undefined, time: undefined, datetime: undefined,
-    phone: '', money: '', postcode: ''
+    phone: '', money: '', postcode: '',
+    editor: new EditorState.createEmpty()
   }),
   validate: (values, props) => {
     const errors = {}
