@@ -18,33 +18,37 @@ export const MuiPhoneInput = ({
   leadIcon, trailIcon,
   leadDom, trailDom,
   ...props
-}) => (
-  <TextField 
-    variant='outlined'
+}) => {
+  const isError = Boolean(form.dirty && form.touched[field.name] && form.errors[field.name])
 
-    // Formik handling
-    {...props} {...field}
-    onChange={value => form.setFieldValue([field.name], value)}
-    value={field.value}
-    
-    // Formik error handling
-    error={Boolean(form.errors[field.name])}
-    helperText={form.errors[field.name]}
+  return (
+    <TextField 
+      variant='outlined'
 
-    // Formatted input handling
-    InputProps={{
-      inputComponent: PhoneFormatInput,
-      startAdornment:
-        leadIcon ? <InputAdornment position='start'><Icon>{leadIcon}</Icon></InputAdornment> :
-        leadDom ? <InputAdornment position='start'>leadDom</InputAdornment> :
-        null,
-      endAdornment:
-        trailIcon ? <InputAdornment position='end'><Icon>{trailIcon}</Icon></InputAdornment> :
-        trailDom ? <InputAdornment position='end'>trailDom</InputAdornment> :
-        null
-    }}
-  />
-)
+      // Formik handling
+      {...props} {...field}
+      onChange={value => form.setFieldValue([field.name], value)}
+      value={field.value}
+      
+      // Formik error handling
+      error={isError}
+      helperText={isError && form.errors[field.name]}
+
+      // Formatted input handling
+      InputProps={{
+        inputComponent: PhoneFormatInput,
+        startAdornment:
+          leadIcon ? <InputAdornment position='start'><Icon>{leadIcon}</Icon></InputAdornment> :
+          leadDom ? <InputAdornment position='start'>leadDom</InputAdornment> :
+          null,
+        endAdornment:
+          trailIcon ? <InputAdornment position='end'><Icon>{trailIcon}</Icon></InputAdornment>: 
+          trailDom ? <InputAdornment position='end'>trailDom</InputAdornment> :
+          null
+      }}
+    />
+  )
+}
 
 export const PhoneFormatInput = ({ inputRef, onChange, ...props }) => (
   <NumberFormat {...props}
@@ -52,6 +56,6 @@ export const PhoneFormatInput = ({ inputRef, onChange, ...props }) => (
     onValueChange={values => {
       onChange(values.value)  
     }}
-    format='#### ### ###'
+    format='##########'
   />  
 )

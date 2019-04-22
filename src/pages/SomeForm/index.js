@@ -55,6 +55,7 @@ export default withFormik({
       if(values.phone.length !== 10) errors.phone = 'Phone need to have 10 numbers'
 
       if(!values.money) errors.money = 'Required'
+      if(values.money > 999999999) errors.money = 'Maximum 999,999,999'
 
     return errors
   },

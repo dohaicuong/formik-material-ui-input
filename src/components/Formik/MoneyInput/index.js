@@ -13,38 +13,30 @@ export default props => {
   )
 }
 
-export const MuiMoneyInput = ({
-  field, form,
-  leadIcon, trailIcon,
-  leadDom, trailDom,
-  ...props
-}) => (
-  <TextField 
-    variant='outlined'
+export const MuiMoneyInput = ({ field, form, ...props }) => {
+  const isError = Boolean(form.dirty && form.touched[field.name] && form.errors[field.name])
+  
+  return (
+    <TextField 
+      variant='outlined'
 
-    // Formik handling
-    {...props} {...field}
-    onChange={value => form.setFieldValue([field.name], value)}
-    value={field.value}
-    
-    // Formik error handling
-    error={Boolean(form.errors[field.name])}
-    helperText={form.errors[field.name]}
+      // Formik handling
+      {...props} {...field}
+      onChange={value => form.setFieldValue([field.name], value)}
+      value={field.value}
+      
+      // Formik error handling
+      error={isError}
+      helperText={isError && form.errors[field.name]}
 
-    // Formatted input handling
-    InputProps={{
-      inputComponent: MoneyFormatInput,
-      startAdornment:
-        leadIcon ? <InputAdornment position='start'><Icon>{leadIcon}</Icon></InputAdornment> :
-        leadDom ? <InputAdornment position='start'>leadDom</InputAdornment> :
-        null,
-      endAdornment:
-        trailIcon ? <InputAdornment position='end'><Icon>{trailIcon}</Icon></InputAdornment> :
-        trailDom ? <InputAdornment position='end'>trailDom</InputAdornment> :
-        null
-    }}
-  />
-)
+      // Formatted input handling
+      InputProps={{
+        inputComponent: MoneyFormatInput,
+        startAdornment: <InputAdornment position='start'><Icon>attach_money</Icon></InputAdornment>
+      }}
+    />
+  )
+}
 
 export const MoneyFormatInput = ({ inputRef, onChange, ...props }) => (
   <NumberFormat {...props}
@@ -53,7 +45,8 @@ export const MoneyFormatInput = ({ inputRef, onChange, ...props }) => (
       onChange(values.value)  
     }}
 
+    allowNegative={false}
+    decimalScale={0}
     thousandSeparator
-    prefix='$'
   />  
 )
